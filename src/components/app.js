@@ -34,12 +34,10 @@ export default class App extends React.Component {
 
   redditSubmit(e) {
     e.preventDefault();
-    console.log('submitted')
     let url = `https://www.reddit.com/r/${this.state.search}.json?limit=${this.state.resultCount}`;
     return superagent.get(url)
     .then(response => {
         this.setState({results: response.body.data.children});
-        console.log('Results received');
         this.resultsRender();
       })
       .catch(error => {
@@ -50,8 +48,8 @@ export default class App extends React.Component {
       resultsRender() {
         return this.state.results.map((result, index) => (
           <li key={index}>
-            <a target="blank" href={result.data.url}>{result.data.title}</a>
-            <p>Up Votes: {result.data.ups}</p>
+            <a target="blank" href={result.data.url}>{result.data.title}
+            <p>Up Votes: {result.data.ups}</p></a>
           </li>
         ));
       }
