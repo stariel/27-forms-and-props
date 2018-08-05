@@ -14,6 +14,7 @@ export default class App extends React.Component {
         search:'',
         resultCount: '',
         results: [],
+        error: '',
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -37,11 +38,16 @@ export default class App extends React.Component {
     let url = `https://www.reddit.com/r/${this.state.search}.json?limit=${this.state.resultCount}`;
     return superagent.get(url)
     .then(response => {
-        this.setState({results: response.body.data.children});
+        this.setState({
+        results: response.body.data.children,
+        error: '',
+      });
         this.resultsRender();
       })
       .catch(error => {
-        this.setState({results: []});
+        this.setState({
+          results: [],
+          error: 'error',});
       });
       }
 
@@ -58,7 +64,7 @@ export default class App extends React.Component {
     return (
         <React.Fragment>
         <h1>Reddit Search App</h1>
-        <SearchForm searchMethod={this.redditSubmit} handleSearch={this.handleSearch} handleNum={this.handleNum}/>
+        <SearchForm err={this.state.error} searchMethod={this.redditSubmit} handleSearch={this.handleSearch} handleNum={this.handleNum}/>
         <SearchResultList renderResults={this.resultsRender}/>
       </React.Fragment>
     );

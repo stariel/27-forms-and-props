@@ -8,7 +8,7 @@ export default class SearchForm extends React.Component {
     const {handleSearch, handleNum, searchMethod} = this.props;
     return(
       <React.Fragment>
-        <form onSubmit={searchMethod}>
+        <form className={this.props.err} onSubmit={searchMethod}>
           <input type="text" onChange={handleSearch} placeholder="Search" />
           <input type="number" onChange={handleNum} placeholder="1-100" min="1" max="100" />
           <button type='submit'>Submit</button>
